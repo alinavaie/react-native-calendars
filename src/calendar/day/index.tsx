@@ -28,8 +28,10 @@ export interface DayProps extends BasicDayProps {
 }
 
 const Day = React.memo((props: DayProps) => {
-  const {date, marking, dayComponent, markingType} = props;
+  const {date, marking, dayComponent, markingType, yesterday} = props;
   const _date = date ? new XDate(date) : undefined;
+  const _yesterday = yesterday ? new XDate(yesterday) : undefined;
+
   const _isToday = isToday(_date);
 
   const markingAccessibilityLabel = useMemo(() => {
@@ -69,12 +71,24 @@ const Day = React.memo((props: DayProps) => {
   }, [_date, marking, _isToday]);
 
   const Component = dayComponent || (markingType === 'period' ? PeriodDay : BasicDay);
-  const dayComponentProps = dayComponent ? {date: xdateToData(date || new XDate())} : undefined;
+  // const dayComponentProps = dayComponent ? {date: xdateToData(date || new XDate())} : undefined;
+  const dayComponentProps = dayComponent
+    ? {
+        date: xdateToData(
+          date ? new XDate(date) : new XDate(),
+          _yesterday && xdateToData(_date).day === xdateToData(_yesterday).day
+        ),
+        yesterday: yesterday
+      }
+    : undefined;
 
   return (
     //@ts-expect-error
     <Component {...props} accessibilityLabel={getAccessibilityLabel} {...dayComponentProps}>
-      {formatNumbers(_date?.getDate())}
+      {/* {formatNumbers(_date?.getDate())} */}
+      {_yesterday && xdateToData(_date).day === xdateToData(_yesterday).day
+        ? formatNumbers(_date?.getDate()) + 1
+        : formatNumbers(_date?.getDate())}
     </Component>
   );
 }, areEqual) as any;

@@ -3,6 +3,7 @@ import {TouchableOpacity, Text, View} from 'react-native';
 import {xdateToData} from '../../../interface';
 import styleConstructor from './style';
 import Marking from '../marking';
+import XDate from 'xdate';
 const BasicDay = props => {
   const {
     theme,
@@ -16,7 +17,8 @@ const BasicDay = props => {
     disableAllTouchEventsForInactiveDays,
     accessibilityLabel,
     children,
-    testID
+    testID,
+    yesterday
   } = props;
   const style = useRef(styleConstructor(theme));
   const _marking = marking || {};
@@ -27,7 +29,11 @@ const BasicDay = props => {
   const isMultiDot = markingType === Marking.markings.MULTI_DOT;
   const isMultiPeriod = markingType === Marking.markings.MULTI_PERIOD;
   const isCustom = markingType === Marking.markings.CUSTOM;
-  const dateData = date ? xdateToData(date) : undefined;
+  const newDate = new XDate(date);
+  // const dateData = date ? xdateToData(date) : undefined;
+  const dateData = date
+    ? xdateToData(newDate, yesterday && xdateToData(newDate).day === xdateToData(yesterday).day)
+    : undefined;
   const shouldDisableTouchEvent = () => {
     const {disableTouchEvent} = _marking;
     let disableTouch = false;

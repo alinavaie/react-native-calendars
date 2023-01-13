@@ -24,6 +24,7 @@ export interface BasicDayProps extends ViewProps {
     testID?: string;
     /** Accessibility label */
     accessibilityLabel?: string;
+    yesterday?: any;
 }
 declare const BasicDay: {
     (props: BasicDayProps): JSX.Element;

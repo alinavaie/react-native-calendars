@@ -5,7 +5,7 @@ import {xdateToData} from '../../../interface';
 import {Theme, DayState, MarkingTypes, DateData} from '../../../types';
 import styleConstructor from './style';
 import Marking, {MarkingProps} from '../marking';
-
+import XDate from 'xdate';
 
 export interface BasicDayProps extends ViewProps {
   state?: DayState;
@@ -31,6 +31,7 @@ export interface BasicDayProps extends ViewProps {
   testID?: string;
   /** Accessibility label */
   accessibilityLabel?: string;
+  yesterday?: any;
 }
 
 const BasicDay = (props: BasicDayProps) => {
@@ -46,7 +47,8 @@ const BasicDay = (props: BasicDayProps) => {
     disableAllTouchEventsForInactiveDays,
     accessibilityLabel,
     children,
-    testID
+    testID,
+    yesterday
   } = props;
   const style = useRef(styleConstructor(theme));
   const _marking = marking || {};
@@ -57,7 +59,11 @@ const BasicDay = (props: BasicDayProps) => {
   const isMultiDot = markingType === Marking.markings.MULTI_DOT;
   const isMultiPeriod = markingType === Marking.markings.MULTI_PERIOD;
   const isCustom = markingType === Marking.markings.CUSTOM;
-  const dateData = date ? xdateToData(date) : undefined;
+  const newDate = new XDate(date);
+  // const dateData = date ? xdateToData(date) : undefined;
+  const dateData = date
+    ? xdateToData(newDate, yesterday && xdateToData(newDate).day === xdateToData(yesterday).day)
+    : undefined;
 
   const shouldDisableTouchEvent = () => {
     const {disableTouchEvent} = _marking;

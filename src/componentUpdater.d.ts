@@ -110,6 +110,7 @@ export declare function extractCalendarProps(props: CalendarListProps): {
     disableAllTouchEventsForDisabledDays?: boolean | undefined;
     disableAllTouchEventsForInactiveDays?: boolean | undefined;
     accessibilityLabel?: string | undefined;
+    yesterday?: any;
     children?: import("react").ReactNode;
     hitSlop?: import("react-native").Insets | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
@@ -247,7 +248,7 @@ export declare function extractCalendarProps(props: CalendarListProps): {
     scrollEventThrottle?: number | undefined;
     scrollIndicatorInsets?: import("react-native").Insets | undefined;
     scrollToOverflowEnabled?: boolean | undefined;
-    snapToAlignment?: "center" | "end" | "start" | undefined;
+    snapToAlignment?: "center" | "start" | "end" | undefined;
     onScrollToTop?: ((event: import("react-native").NativeSyntheticEvent<import("react-native").NativeScrollEvent>) => void) | undefined;
     zoomScale?: number | undefined;
     endFillColor?: import("react-native").ColorValue | undefined;
@@ -317,6 +318,7 @@ export declare function extractCalendarListProps(props: AgendaProps): {
     disableAllTouchEventsForDisabledDays?: boolean | undefined;
     disableAllTouchEventsForInactiveDays?: boolean | undefined;
     accessibilityLabel?: string | undefined;
+    yesterday?: any;
     children?: import("react").ReactNode;
     hitSlop?: import("react-native").Insets | undefined;
     onLayout?: ((event: import("react-native").LayoutChangeEvent) => void) | undefined;
@@ -464,7 +466,7 @@ export declare function extractCalendarListProps(props: AgendaProps): {
     scrollIndicatorInsets?: import("react-native").Insets | undefined;
     scrollToOverflowEnabled?: boolean | undefined;
     scrollsToTop?: boolean | undefined;
-    snapToAlignment?: "center" | "end" | "start" | undefined;
+    snapToAlignment?: "center" | "start" | "end" | undefined;
     onScrollToTop?: ((event: import("react-native").NativeSyntheticEvent<import("react-native").NativeScrollEvent>) => void) | undefined;
     zoomScale?: number | undefined;
     endFillColor?: import("react-native").ColorValue | undefined;

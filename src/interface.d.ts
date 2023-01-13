@@ -1,6 +1,6 @@
 /// <reference types="xdate" />
 export declare function padNumber(n: number): string | number;
-export declare function xdateToData(date: XDate | string): {
+export declare function xdateToData(date: XDate | string, needToConvert: boolean): {
     year: any;
     month: any;
     day: any;

@@ -7,9 +7,32 @@ export function padNumber(n: number) {
   return n;
 }
 
-export function xdateToData(date: XDate | string) {
+export function xdateToData(date: XDate | string, needToConvert: boolean) {
   const d = date instanceof XDate ? date : new XDate(date);
   const dateString = toMarkingFormat(d);
+
+  if (needToConvert) {
+    const _28days = 2;
+    const _31days = [1, 3, 5, 7, 8, 10, 12];
+    const _30days = [4, 6, 9, 11];
+
+    const isLastDayOfMonth =
+      (d.getMonth() + 1 === _28days && d.getDate() === 28) ||
+      (_31days.includes(d.getMonth() + 1) && d.getDate() === 31) ||
+      (_30days.includes(d.getMonth() + 1) && d.getDate() === 30);
+    const isTheLastDayOfYear = d.getMonth() + 1 === 12 && d.getDate() === 31;
+    const year = isTheLastDayOfYear ? d.getFullYear() + 1 : d.getFullYear();
+    const month = isTheLastDayOfYear ? 1 : isLastDayOfMonth ? d.getMonth() + 2 : d.getMonth() + 1;
+    const day = isLastDayOfMonth ? 1 : d.getDate() + 1;
+    return {
+      year,
+      month,
+      day,
+      timestamp: new XDate(dateString, true).getTime() + 86400000,
+      dateString: `${year}-${month}-${day}`
+    };
+  }
+
   return {
     year: d.getFullYear(),
     month: d.getMonth() + 1,

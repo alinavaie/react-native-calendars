@@ -134,6 +134,7 @@ export default class Agenda extends Component<AgendaProps, State> {
         disableAllTouchEventsForDisabledDays?: React.Validator<boolean | null | undefined> | undefined;
         disableAllTouchEventsForInactiveDays?: React.Validator<boolean | null | undefined> | undefined;
         accessibilityLabel?: React.Validator<string | null | undefined> | undefined;
+        yesterday?: React.Validator<any> | undefined;
         children?: React.Validator<React.ReactNode> | undefined;
         hitSlop?: React.Validator<import("react-native").Insets | null | undefined> | undefined;
         onLayout?: React.Validator<((event: LayoutChangeEvent) => void) | null | undefined> | undefined;
@@ -273,7 +274,7 @@ export default class Agenda extends Component<AgendaProps, State> {
         scrollIndicatorInsets?: React.Validator<import("react-native").Insets | null | undefined> | undefined;
         scrollToOverflowEnabled?: React.Validator<boolean | null | undefined> | undefined;
         scrollsToTop?: React.Validator<boolean | null | undefined> | undefined;
-        snapToAlignment?: React.Validator<"center" | "end" | "start" | null | undefined> | undefined;
+        snapToAlignment?: React.Validator<"center" | "start" | "end" | null | undefined> | undefined;
         onScrollToTop?: React.Validator<((event: NativeSyntheticEvent<NativeScrollEvent>) => void) | null | undefined> | undefined;
         zoomScale?: React.Validator<number | null | undefined> | undefined;
         endFillColor?: React.Validator<import("react-native").ColorValue | null | undefined> | undefined;

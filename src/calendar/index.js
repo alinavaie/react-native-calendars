@@ -147,7 +147,7 @@ const Calendar = props => {
       </View>
     );
   };
-  const renderDay = (day, id) => {
+  const renderDay = (day, id, yesterday) => {
     const dayProps = extractDayProps(props);
     if (!sameMonth(day, currentMonth) && hideExtraDays) {
       return <View key={id} style={style.current.emptyDayContainer} />;
@@ -158,6 +158,7 @@ const Calendar = props => {
       <View style={style.current.dayContainer} key={id}>
         <Day
           {...dayProps}
+          yesterday={yesterday}
           testID={`${testID}.day_${dateString}`}
           date={dateString}
           state={getState(day, currentMonth, props, isControlled)}
@@ -168,10 +169,14 @@ const Calendar = props => {
       </View>
     );
   };
-  const renderWeek = (days, id) => {
+  const renderWeek = (days, id, allDays) => {
     const week = [];
     days.forEach((day, id2) => {
-      week.push(renderDay(day, id2));
+      let yesterday = null;
+      allDays.forEach((d, i) => {
+        if (d.getTime() === day.getTime()) yesterday = allDays[i - 1];
+      });
+      week.push(renderDay(day, id2, yesterday));
     }, this);
     if (props.showWeekNumbers) {
       week.unshift(renderWeekNumber(days[days.length - 1].getWeek()));
@@ -185,9 +190,10 @@ const Calendar = props => {
   const renderMonth = () => {
     const shouldShowSixWeeks = showSixWeeks && !hideExtraDays;
     const days = page(currentMonth, firstDay, shouldShowSixWeeks);
+    const allDays = page(currentMonth, firstDay, shouldShowSixWeeks);
     const weeks = [];
     while (days.length) {
-      weeks.push(renderWeek(days.splice(0, 7), weeks.length));
+      weeks.push(renderWeek(days.splice(0, 7), weeks.length, allDays));
     }
     return <View style={style.current.monthView}>{weeks}</View>;
   };
